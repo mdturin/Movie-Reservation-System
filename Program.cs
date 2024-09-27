@@ -1,4 +1,10 @@
 
+using Asp.Versioning;
+using Microsoft.Extensions.Options;
+using Movie_Reservation_System.Configurations;
+using Movie_Reservation_System.Extensions;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 namespace Movie_Reservation_System;
 
 public class Program
@@ -6,13 +12,13 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        // Add services to the container.
-
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddVersioning();
+
+        builder.Services
+            .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
         var app = builder.Build();
 
@@ -20,13 +26,20 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(options =>
+            {
+                var descriptions = app.DescribeApiVersions();
+                foreach (var description in descriptions)
+                {
+                    options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
+            });
+            app.UseDeveloperExceptionPage();
         }
 
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
 
         app.MapControllers();
 
