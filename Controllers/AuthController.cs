@@ -9,4 +9,5 @@ namespace Movie_Reservation_System.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class AuthController : ControllerBase
 {
+
 }
