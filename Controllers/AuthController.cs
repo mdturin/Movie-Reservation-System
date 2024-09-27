@@ -36,6 +36,8 @@ public class AuthController(UserManager<ApplicationUser> userManager, JwtService
 
         if (result.Succeeded)
         {
+            await _userManager.AddToRoleAsync(user, "User");
+
             var token = _jwtService.CreateToken(user);
             return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
         }
