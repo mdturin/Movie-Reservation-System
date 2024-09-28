@@ -13,12 +13,12 @@ namespace Movi.WebAPI.Controllers;
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 public class AuthController(
-    JwtService jwtService,
+    IJwtService jwtService,
     IUserRepository userRepository,
     UserManager<ApplicationUser> userManager
     ) : ControllerBase
 {
-    private readonly JwtService _jwtService = jwtService;
+    private readonly IJwtService _jwtService = jwtService;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IUserRepository _userRepository = userRepository;
 
