@@ -1,4 +1,4 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +43,7 @@ public class AuthController(
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, "User");
-            return Ok(new { token = _jwtService.GenerateToken(user) });
+            return Ok(new { token = await _jwtService.GenerateTokenAsync(user) });
         }
 
         foreach (var error in result.Errors)
@@ -61,7 +61,7 @@ public class AuthController(
             .ValidateUserAsync(loginModel.Username, loginModel.Password);
         if (user == null)
             return Unauthorized("Invalid username or password");
-        return Ok(new { Token = _jwtService.GenerateToken(user) });
+        return Ok(new { Token = await _jwtService.GenerateTokenAsync(user) });
     }
 
     [HttpPost("test")]

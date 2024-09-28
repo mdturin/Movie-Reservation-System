@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -50,7 +50,7 @@ public static class ServiceCollectionExtension
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
-            byte[] key = Encoding.UTF8.GetBytes(config["Jwt:Key"]);
+            var key = Encoding.UTF8.GetBytes(config["Jwt:Key"]);
             options.TokenValidationParameters = new()
             {
                 ValidateIssuer = false,

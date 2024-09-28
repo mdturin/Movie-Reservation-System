@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Movie_Reservation_System.Configurations;
 using Movie_Reservation_System.Data;
 using Movie_Reservation_System.Extensions;
+using Movie_Reservation_System.Middlewares;
 using Movie_Reservation_System.Repositories;
 using Movie_Reservation_System.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -17,9 +18,12 @@ builder.Services.AddVersioning();
 builder.Services.AddDatabase(config);
 builder.Services.AddIdentity();
 builder.Services.AddAuthenticationService(config);
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services
-    .AddSingleton<JwtService>()
+    .AddScoped<JwtService>()
+    .AddScoped<IMovieService, MovieService>()
+    .AddScoped<IBulkRepository, BulkRepository>()
     .AddScoped<IUserRepository, UserRepository>()
     .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
@@ -33,6 +37,7 @@ if (app.Environment.IsDevelopment())
 
 await SeedDatabase(app);
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -48,7 +53,22 @@ static async Task InitializeRoles(IServiceProvider serviceProvider)
     {
         if (!await roleManager.RoleExistsAsync(roleName))
         {
-            await roleManager.CreateAsync(new IdentityRole(roleName));
+            var result = await roleManager
+                .CreateAsync(new IdentityRole(roleName));
+            if (result.Succeeded)
+                Console.WriteLine($"Role '{roleName}' created successfully.");
+            else
+            {
+                Console.WriteLine($"Error creating role '{roleName}':");
+                foreach (var error in result.Errors)
+                {
+                    Console.WriteLine($"- {error.Description}");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Role '{roleName}' already exist.");
         }
     }
 }
@@ -64,10 +84,41 @@ static async Task SeedDatabase(WebApplication app)
         await context.Database.EnsureCreatedAsync();
         await context.Database.MigrateAsync();
         await InitializeRoles(services);
+        await InitializeRootAdmin(services);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+    }
+}
+
+static async Task InitializeRootAdmin(IServiceProvider serviceProvider)
+{
+    var userManager = serviceProvider
+        .GetRequiredService<UserManager<ApplicationUser>>();
+
+    var rootUser = new ApplicationUser()
+    {
+        Email = "root@gmail.com",
+        UserName = "root-user",
+        EmailConfirmed = true,
+    };
+
+    if (await userManager.FindByEmailAsync(rootUser.Email) != null)
+    {
+        await userManager.DeleteAsync(rootUser);
+    }
+
+    await userManager.CreateAsync(rootUser, "Root@123");
+    if (!await userManager.IsInRoleAsync(rootUser, "Admin"))
+    {
+        var result = await userManager
+            .AddToRoleAsync(rootUser, "Admin");
+        if (!result.Succeeded)
+        {
+            foreach (var error in result.Errors)
+                Console.WriteLine($"Error adding root user to Admin role: {error.Description}");
+        }
     }
 }

@@ -1,8 +1,8 @@
-using Movie_Reservation_System.Abstractions;
+using Movie_Reservation_System.Models;
 
-namespace Movie_Reservation_System.Models;
+namespace Movie_Reservation_System.Dtos;
 
-public class Movie : ADatabaseModel
+public class AddMovieDto
 {
     public string Title { get; set; }
     public string Description { get; set; }
@@ -13,8 +13,8 @@ public class Movie : ADatabaseModel
     public string Rating { get; set; }
 
     // Relationship properties
-    public ICollection<Showtime> Showtimes { get; set; }
-    public ICollection<Actor> Cast { get; set; }
+    public ICollection<Showtime> Showtimes { get; set; } = [];
+    public ICollection<Actor> Cast { get; set; } = [];
     public string Director { get; set; }
     public string PosterUrl { get; set; }
 

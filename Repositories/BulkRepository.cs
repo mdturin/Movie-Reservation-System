@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Movie_Reservation_System.Data;
 using Movie_Reservation_System.Interfaces;
 
@@ -6,7 +6,7 @@ namespace Movie_Reservation_System.Repositories;
 
 public interface IBulkRepository
 {
-    Task AddAsync<TEntity>(TEntity entity)
+    Task<int> AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel;
 
     Task DeleteAsync<TEntity>(string id)
@@ -29,11 +29,11 @@ public class BulkRepository(ApplicationDbContext context)
     private DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class, IDatabaseModel
         => _context.Set<TEntity>();
 
-    public async Task AddAsync<TEntity>(TEntity entity)
+    public async Task<int> AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel
     {
         await GetDbSet<TEntity>().AddAsync(entity);
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync<TEntity>(string id)
