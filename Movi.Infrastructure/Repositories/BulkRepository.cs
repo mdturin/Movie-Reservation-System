@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Movie_Reservation_System.Data;
-using Movie_Reservation_System.Interfaces;
+using Movi.Core.Domain.Interfaces;
+using Movi.Infrastructure.Data;
 
-namespace Movie_Reservation_System.Repositories;
+namespace Movi.Infrastructure.Repositories;
 
 public class BulkRepository(ApplicationDbContext context)
     : IBulkRepository

@@ -1,6 +1,6 @@
-using Movie_Reservation_System.Models;
+using Movi.Core.Domain.Entities;
 
-namespace Movie_Reservation_System.Dtos;
+namespace Movi.Core.Domain.Dtos;
 
 public class AddMovieDto
 {

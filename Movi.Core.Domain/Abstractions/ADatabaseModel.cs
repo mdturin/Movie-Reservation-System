@@ -1,6 +1,6 @@
-﻿using Movie_Reservation_System.Interfaces;
+using Movi.Core.Domain.Interfaces;
 
-namespace Movie_Reservation_System.Abstractions;
+namespace Movi.Core.Domain.Abstractions;
 
 public abstract class ADatabaseModel : IDatabaseModel
 {

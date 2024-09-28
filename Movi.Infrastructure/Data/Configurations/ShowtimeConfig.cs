@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Movie_Reservation_System.Models;
+using Movi.Core.Domain.Entities;
 
-namespace Movie_Reservation_System.Data.DataConfig;
+namespace Movi.Infrastructure.Data.Configurations;
 
-public class ShowtimeConfiguration : IEntityTypeConfiguration<Showtime>
+public class ShowtimeConfig : IEntityTypeConfiguration<Showtime>
 {
     public void Configure(EntityTypeBuilder<Showtime> builder)
     {

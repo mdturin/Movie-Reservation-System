@@ -1,6 +1,6 @@
-using Movie_Reservation_System.Data;
+using Movi.Core.Domain.Entities;
 
-namespace Movie_Reservation_System.Interfaces;
+namespace Movi.Core.Domain.Interfaces;
 
 public interface IUserRepository
 {

@@ -1,21 +1,14 @@
 using System.Reflection;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Movie_Reservation_System.Interfaces;
+using Movi.Core.Domain.Entities;
+using Movi.Core.Domain.Interfaces;
 
-namespace Movie_Reservation_System.Data;
+namespace Movi.Infrastructure.Data;
 
-public class ApplicationUser : IdentityUser { }
-
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityDbContext<ApplicationUser>(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-
-    {
-    }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();

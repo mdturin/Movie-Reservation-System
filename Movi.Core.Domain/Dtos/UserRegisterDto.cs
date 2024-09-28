@@ -1,4 +1,4 @@
-﻿namespace Movie_Reservation_System.Dtos;
+namespace Movi.Core.Domain.Dtos;
 
 public class UserRegisterDto
 {

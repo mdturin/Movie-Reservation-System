@@ -1,6 +1,6 @@
-using Movie_Reservation_System.Abstractions;
+using Movi.Core.Domain.Abstractions;
 
-namespace Movie_Reservation_System.Models;
+namespace Movi.Core.Domain.Entities;
 
 public class Movie : ADatabaseModel
 {

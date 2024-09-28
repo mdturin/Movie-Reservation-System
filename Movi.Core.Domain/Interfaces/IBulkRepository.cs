@@ -1,4 +1,4 @@
-namespace Movie_Reservation_System.Interfaces;
+namespace Movi.Core.Domain.Interfaces;
 
 public interface IBulkRepository
 {

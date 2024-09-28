@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
-using Movie_Reservation_System.Data;
-using Movie_Reservation_System.Interfaces;
+using Movi.Core.Domain.Entities;
+using Movi.Core.Domain.Interfaces;
 
-namespace Movie_Reservation_System.Repositories;
+namespace Movi.Infrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
