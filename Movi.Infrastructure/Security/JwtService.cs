@@ -2,11 +2,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Movie_Reservation_System.Data;
-using Movie_Reservation_System.Interfaces;
+using Movi.Core.Domain.Entities;
+using Movi.Core.Domain.Interfaces;
 
-namespace Movie_Reservation_System.Services;
+namespace Movi.Infrastructure.Security;
 
 public class JwtService(IConfiguration config, UserManager<ApplicationUser> userManager)
     : IJwtService

@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Movie_Reservation_System</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,11 +20,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EditorConfigFiles Remove="E:\Project\RoadMap Projects\Movie Reservation System\.editorconfig" />
+        <Folder Include="Controllers\" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="E:\Project\RoadMap Projects\Movie Reservation System\.editorconfig" />
+        <ProjectReference Include="..\Movi.Core.Domain\Movi.Core.Domain.csproj" />
+        <ProjectReference Include="..\Movi.Infrastructure\Movi.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

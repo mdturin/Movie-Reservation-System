@@ -1,4 +1,4 @@
-﻿namespace Movie_Reservation_System.Extensions;
+namespace Movi.WebAPI.Extensions;
 
 public static class WebApplicationExtension
 {

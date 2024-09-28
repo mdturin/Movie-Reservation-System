@@ -1,10 +1,10 @@
-﻿using Asp.Versioning;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Movie_Reservation_System.Data;
+using Movi.Core.Domain.Entities;
 
-namespace Movie_Reservation_System.Controllers;
+namespace Movi.WebAPI.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]

@@ -1,8 +1,8 @@
-using Movie_Reservation_System.Dtos;
 using System.Net;
 using System.Text.Json;
+using Movi.Core.Domain.Dtos;
 
-namespace Movie_Reservation_System.Middlewares;
+namespace Movi.WebAPI.Middlewares;
 
 public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
 {

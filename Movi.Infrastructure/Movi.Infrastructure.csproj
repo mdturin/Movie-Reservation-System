@@ -13,4 +13,8 @@
         <ProjectReference Include="..\Movi.Core.Domain\Movi.Core.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Security\" />
+    </ItemGroup>
+
 </Project>

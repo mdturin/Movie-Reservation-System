@@ -1,11 +1,12 @@
 using AutoMapper;
-using Movie_Reservation_System.Dtos;
-using Movie_Reservation_System.Interfaces;
-using Movie_Reservation_System.Models;
+using Movi.Core.Domain.Dtos;
+using Movi.Core.Domain.Entities;
+using Movi.Core.Domain.Interfaces;
 
-namespace Movie_Reservation_System.Services;
+namespace Movi.Core.Domain.Services;
 
-public class MovieService(IMapper mapper, IBulkRepository context) : IMovieService
+public class MovieService(IMapper mapper, IBulkRepository context)
+    : IMovieService
 {
     private readonly IMapper _mapper = mapper;
     private readonly IBulkRepository _context = context;

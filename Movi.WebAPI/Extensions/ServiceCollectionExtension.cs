@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Movie_Reservation_System.Data;
+using Movi.Core.Domain.Entities;
+using Movi.Infrastructure.Data;
 
-namespace Movie_Reservation_System.Extensions;
+namespace Movi.WebAPI.Extensions;
 
 public static class ServiceCollectionExtension
 {

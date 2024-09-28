@@ -1,8 +1,8 @@
 using AutoMapper;
-using Movie_Reservation_System.Dtos;
-using Movie_Reservation_System.Models;
+using Movi.Core.Domain.Dtos;
+using Movi.Core.Domain.Entities;
 
-namespace Movie_Reservation_System.Configurations;
+namespace Movi.WebAPI.Configurations;
 
 public class MappingProfile : Profile
 {

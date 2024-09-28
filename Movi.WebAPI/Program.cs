@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Movie_Reservation_System.Configurations;
-using Movie_Reservation_System.Data;
-using Movie_Reservation_System.Extensions;
-using Movie_Reservation_System.Interfaces;
-using Movie_Reservation_System.Middlewares;
-using Movie_Reservation_System.Repositories;
-using Movie_Reservation_System.Services;
+using Movi.Core.Domain.Entities;
+using Movi.Core.Domain.Interfaces;
+using Movi.Core.Domain.Services;
+using Movi.Infrastructure.Data;
+using Movi.Infrastructure.Repositories;
+using Movi.Infrastructure.Security;
+using Movi.WebAPI.Configurations;
+using Movi.WebAPI.Extensions;
+using Movi.WebAPI.Middlewares;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +24,7 @@ builder.Services.AddAuthenticationService(config);
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services
-    .AddScoped<JwtService>()
+    .AddScoped<IJwtService, JwtService>()
     .AddScoped<IMovieService, MovieService>()
     .AddScoped<IBulkRepository, BulkRepository>()
     .AddScoped<IUserRepository, UserRepository>()

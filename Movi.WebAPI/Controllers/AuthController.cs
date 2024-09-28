@@ -2,12 +2,12 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Movie_Reservation_System.Data;
-using Movie_Reservation_System.Dtos;
-using Movie_Reservation_System.Interfaces;
-using Movie_Reservation_System.Services;
+using Movi.Core.Domain.Dtos;
+using Movi.Core.Domain.Entities;
+using Movi.Core.Domain.Interfaces;
+using Movi.Infrastructure.Security;
 
-namespace Movie_Reservation_System.Controllers;
+namespace Movi.WebAPI.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
