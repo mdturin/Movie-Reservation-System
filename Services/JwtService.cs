@@ -4,10 +4,12 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Movie_Reservation_System.Data;
+using Movie_Reservation_System.Interfaces;
 
 namespace Movie_Reservation_System.Services;
 
 public class JwtService(IConfiguration config, UserManager<ApplicationUser> userManager)
+    : IJwtService
 {
     private readonly IConfiguration _config = config;
     private readonly UserManager<ApplicationUser> _userManager = userManager;

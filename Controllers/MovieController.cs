@@ -2,7 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movie_Reservation_System.Dtos;
-using Movie_Reservation_System.Services;
+using Movie_Reservation_System.Interfaces;
 
 namespace Movie_Reservation_System.Controllers;
 

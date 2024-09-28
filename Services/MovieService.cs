@@ -1,14 +1,9 @@
 using AutoMapper;
 using Movie_Reservation_System.Dtos;
+using Movie_Reservation_System.Interfaces;
 using Movie_Reservation_System.Models;
-using Movie_Reservation_System.Repositories;
 
 namespace Movie_Reservation_System.Services;
-
-public interface IMovieService
-{
-    Task<int> AddAsync(AddMovieDto dto);
-}
 
 public class MovieService(IMapper mapper, IBulkRepository context) : IMovieService
 {

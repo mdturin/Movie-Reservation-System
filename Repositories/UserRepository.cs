@@ -1,13 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Movie_Reservation_System.Data;
+using Movie_Reservation_System.Interfaces;
 
 namespace Movie_Reservation_System.Repositories;
-
-public interface IUserRepository
-{
-    Task<ApplicationUser> ValidateUserAsync(string username, string password);
-    Task<ApplicationUser> GetUserByUsernameAsync(string username);
-}
 
 public class UserRepository : IUserRepository
 {

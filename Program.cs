@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Movie_Reservation_System.Configurations;
 using Movie_Reservation_System.Data;
 using Movie_Reservation_System.Extensions;
+using Movie_Reservation_System.Interfaces;
 using Movie_Reservation_System.Middlewares;
 using Movie_Reservation_System.Repositories;
 using Movie_Reservation_System.Services;

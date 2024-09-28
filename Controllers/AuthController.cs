@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Movie_Reservation_System.Data;
 using Movie_Reservation_System.Dtos;
-using Movie_Reservation_System.Repositories;
+using Movie_Reservation_System.Interfaces;
 using Movie_Reservation_System.Services;
 
 namespace Movie_Reservation_System.Controllers;
