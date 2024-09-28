@@ -6,7 +6,7 @@ namespace Movie_Reservation_System.Repositories;
 
 public interface IBulkRepository
 {
-    Task AddAsync<TEntity>(TEntity entity) 
+    Task AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel;
 
     Task DeleteAsync<TEntity>(string id)

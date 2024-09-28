@@ -1,8 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Movie_Reservation_System.Data;
-using System.IdentityModel.Tokens.Jwt;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Movie_Reservation_System.Data;
 
 namespace Movie_Reservation_System.Services;
 

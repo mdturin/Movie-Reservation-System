@@ -1,14 +1,21 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-#nullable disable
-
-namespace Movie_Reservation_System.Migrations
+﻿namespace Movie_Reservation_System.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
+
+    /// <summary>
+    /// Defines the <see cref="InitialCreate" />
+    /// </summary>
     public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
+
+        /// <summary>
+        /// The Up
+        /// </summary>
+        /// <param name="migrationBuilder">The migrationBuilder<see cref="MigrationBuilder"/></param>
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -197,6 +204,11 @@ namespace Movie_Reservation_System.Migrations
         }
 
         /// <inheritdoc />
+
+        /// <summary>
+        /// The Down
+        /// </summary>
+        /// <param name="migrationBuilder">The migrationBuilder<see cref="MigrationBuilder"/></param>
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

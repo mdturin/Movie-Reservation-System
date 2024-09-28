@@ -13,9 +13,9 @@ namespace Movie_Reservation_System.Controllers;
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
 public class AuthController(
-    JwtService jwtService, 
+    JwtService jwtService,
     IUserRepository userRepository,
-    UserManager<ApplicationUser> userManager 
+    UserManager<ApplicationUser> userManager
     ) : ControllerBase
 {
     private readonly JwtService _jwtService = jwtService;

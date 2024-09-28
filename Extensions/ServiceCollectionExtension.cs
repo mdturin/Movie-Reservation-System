@@ -1,11 +1,11 @@
-﻿using Asp.Versioning;
+﻿using System.Text;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Movie_Reservation_System.Data;
-using System.Text;
 
 namespace Movie_Reservation_System.Extensions;
 
