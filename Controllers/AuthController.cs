@@ -1,20 +1,26 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Movie_Reservation_System.Data;
 using Movie_Reservation_System.Dtos;
+using Movie_Reservation_System.Repositories;
 using Movie_Reservation_System.Services;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace Movie_Reservation_System.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
-public class AuthController(UserManager<ApplicationUser> userManager, JwtService jwtService) : ControllerBase
+public class AuthController(
+    JwtService jwtService, 
+    IUserRepository userRepository,
+    UserManager<ApplicationUser> userManager 
+    ) : ControllerBase
 {
     private readonly JwtService _jwtService = jwtService;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly IUserRepository _userRepository = userRepository;
 
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] UserRegisterDto registerModel)
@@ -37,9 +43,7 @@ public class AuthController(UserManager<ApplicationUser> userManager, JwtService
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, "User");
-
-            var token = _jwtService.CreateToken(user);
-            return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+            return Ok(new { token = _jwtService.GenerateToken(user) });
         }
 
         foreach (var error in result.Errors)
@@ -49,4 +53,18 @@ public class AuthController(UserManager<ApplicationUser> userManager, JwtService
 
         return BadRequest(ModelState);
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] UserLoginDto loginModel)
+    {
+        var user = await _userRepository
+            .ValidateUserAsync(loginModel.Username, loginModel.Password);
+        if (user == null)
+            return Unauthorized("Invalid username or password");
+        return Ok(new { Token = _jwtService.GenerateToken(user) });
+    }
+
+    [HttpPost("test")]
+    [Authorize]
+    public IActionResult Auth() => Ok("Hello");
 }

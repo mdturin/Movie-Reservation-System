@@ -10,7 +10,7 @@ public class JwtService(IConfiguration config)
 {
     private readonly IConfiguration _config = config;
 
-    public JwtSecurityToken CreateToken(ApplicationUser user)
+    public string GenerateToken(ApplicationUser user)
     {
         var claims = new[]
         {
@@ -27,6 +27,6 @@ public class JwtService(IConfiguration config)
             expires: DateTime.Now.AddMinutes(Convert.ToDouble(_config["Jwt:DurationInMinutes"]))
         );
 
-        return token;
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

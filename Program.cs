@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Movie_Reservation_System.Configurations;
 using Movie_Reservation_System.Data;
 using Movie_Reservation_System.Extensions;
+using Movie_Reservation_System.Repositories;
 using Movie_Reservation_System.Services;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -11,14 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerApp();
 builder.Services.AddVersioning();
 builder.Services.AddDatabase(config);
 builder.Services.AddIdentity();
-builder.Services.AddAuthentication();
+builder.Services.AddAuthenticationService(config);
 
 builder.Services
     .AddSingleton<JwtService>()
+    .AddScoped<IUserRepository, UserRepository>()
     .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 var app = builder.Build();
@@ -53,20 +55,19 @@ static async Task InitializeRoles(IServiceProvider serviceProvider)
 
 static async Task SeedDatabase(WebApplication app)
 {
-    using (var scope = app.Services.CreateScope())
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var context = services
+        .GetRequiredService<ApplicationDbContext>();
+    try
     {
-        var services = scope.ServiceProvider;
-        var context = services
-            .GetRequiredService<ApplicationDbContext>();
-        try
-        {
-            await context.Database.MigrateAsync();
-            await InitializeRoles(services);
-        }
-        catch (Exception ex)
-        {
-            var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-        }
+        await context.Database.EnsureCreatedAsync();
+        await context.Database.MigrateAsync();
+        await InitializeRoles(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
     }
 }
