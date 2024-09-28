@@ -29,8 +29,8 @@ public static class ServiceCollectionExtension
 
     public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration config)
     {
-        return services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+        return services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
+            config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Movi.Infrastructure")));
     }
 
     public static IServiceCollection AddIdentity(this IServiceCollection services)
