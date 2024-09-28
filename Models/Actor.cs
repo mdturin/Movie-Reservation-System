@@ -1,4 +1,4 @@
-﻿using Movie_Reservation_System.Abstractions;
+using Movie_Reservation_System.Abstractions;
 
 namespace Movie_Reservation_System.Models;
 

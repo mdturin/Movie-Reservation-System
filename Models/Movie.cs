@@ -1,4 +1,4 @@
-﻿using Movie_Reservation_System.Abstractions;
+using Movie_Reservation_System.Abstractions;
 
 namespace Movie_Reservation_System.Models;
 
@@ -13,8 +13,8 @@ public class Movie : ADatabaseModel
     public string Rating { get; set; } // Movie rating (e.g., PG-13, R)
 
     // Relationship properties
-    public List<Showtime> Showtimes { get; set; } // List of showtimes for this movie
-    public List<Actor> Cast { get; set; } // List of main actors in the movie
+    public ICollection<Showtime> Showtimes { get; set; } // List of showtimes for this movie
+    public ICollection<Actor> Cast { get; set; } // List of main actors in the movie
     public string Director { get; set; } // Name of the movie director
     public string PosterUrl { get; set; } // URL for the movie poster image
 
