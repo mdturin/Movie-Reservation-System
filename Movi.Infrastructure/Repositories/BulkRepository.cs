@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.EntityFrameworkCore;
 using Movi.Core.Domain.Interfaces;
 using Movi.Infrastructure.Data;
@@ -29,6 +30,15 @@ public class BulkRepository(ApplicationDbContext context)
         }
     }
 
+    public async Task DeleteAsync<TEntity>(IEnumerable<string> ids)
+        where TEntity : class, IDatabaseModel
+    {
+        await GetDbSet<TEntity>()
+            .Where(entity => ids.Contains(entity.Id))
+            .ExecuteDeleteAsync();
+        await _context.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
         where TEntity : class, IDatabaseModel
     {
@@ -47,5 +57,12 @@ public class BulkRepository(ApplicationDbContext context)
         GetDbSet<TEntity>().Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
         await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> AddAsync<TEntity>(IEnumerable<TEntity> entities)
+        where TEntity : class, IDatabaseModel
+    {
+        await GetDbSet<TEntity>().AddRangeAsync(entities);
+        return await _context.SaveChangesAsync();
     }
 }

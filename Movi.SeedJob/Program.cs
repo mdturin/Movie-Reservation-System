@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
 using Movi.Infrastructure.Data;
 using Movi.Infrastructure.Repositories;
+using Movi.SeedJob.Publishers;
 
 var builder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -27,6 +29,27 @@ services
 var serviceProvider = services.BuildServiceProvider();
 var userManager = serviceProvider
     .GetRequiredService<UserManager<ApplicationUser>>();
+var context = serviceProvider
+    .GetRequiredService<IBulkRepository>();
 
-if (userManager.FindByEmailAsync("root@gmail.com") != null)
-    Console.WriteLine("found root.");
+var publisherTypes = GetAllImplementations<IResourcePublisher>();
+foreach (var type in publisherTypes)
+{
+    var instance = Activator
+        .CreateInstance(type, context, userManager) as IResourcePublisher;
+    await instance?.PublishAsync();
+}
+
+static List<Type> GetAllImplementations<TBase>()
+{
+    // Get the assembly where the base class is defined (you can change it if needed)
+    var assembly = Assembly.GetAssembly(typeof(TBase));
+
+    // Filter the types that inherit from the base class and are not abstract
+    var implementations = assembly
+        .GetTypes()
+        .Where(t => typeof(TBase).IsAssignableFrom(t) && !t.IsAbstract && t.IsClass)
+        .ToList();
+
+    return implementations;
+}
