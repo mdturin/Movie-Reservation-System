@@ -13,6 +13,4 @@ public class MovieDto
     public string PosterUrl { get; set; }
     public decimal TicketPrice { get; set; }
     public string TrailerUrl { get; set; }
-    public ICollection<ActorDto> Cast { get; set; } = [];
-    public ICollection<ShowtimeDto> Showtimes { get; set; } = [];
 }

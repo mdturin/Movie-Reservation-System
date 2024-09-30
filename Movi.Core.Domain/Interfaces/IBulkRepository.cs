@@ -20,6 +20,6 @@ public interface IBulkRepository
     Task<TEntity> GetByIdAsync<TEntity>(string id)
         where TEntity : class, IDatabaseModel;
 
-    void Update<TEntity>(TEntity entity)
+    Task<int> Update<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel;
 }

@@ -15,7 +15,7 @@ public abstract class AResourcePublisher<T>(IBulkRepository context, UserManager
 {
     public abstract string FileName { get; }
     public virtual bool Cleanup { get; } = true;
-    public virtual bool IsArray { get; } = false;
+    public virtual bool IsArray { get; } = true;
 
     protected readonly IBulkRepository _context = context;
     protected readonly UserManager<ApplicationUser> _manager = manager;
@@ -24,7 +24,14 @@ public abstract class AResourcePublisher<T>(IBulkRepository context, UserManager
         => IsArray ? typeof(List<T>) : typeof(T);
 
     public virtual object Deserialize()
-        => JsonSerializer.Deserialize(File.ReadAllText(FileName), GetModelType());
+        => JsonSerializer.Deserialize(File.ReadAllText(FileName), GetModelType(), new JsonSerializerOptions()
+        {
+            MaxDepth = 10,
+            AllowTrailingCommas = true,
+            PropertyNameCaseInsensitive = true
+        });
+
+    public virtual void ApplyFilter(params T[] entities) { }
 
     public virtual async Task<object> PublishAsync()
     {
@@ -34,10 +41,12 @@ public abstract class AResourcePublisher<T>(IBulkRepository context, UserManager
 
         if (obj is List<T> models)
         {
+            ApplyFilter([.. models]);
             await _context.AddAsync(models);
         }
         else if (obj is T model)
         {
+            ApplyFilter(model);
             await _context.AddAsync(model);
         }
 

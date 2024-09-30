@@ -16,4 +16,10 @@ public class MovieService(IMapper mapper, IBulkRepository context)
         var movie = _mapper.Map<Movie>(dto);
         return await _context.AddAsync(movie);
     }
+
+    public Task<int> UpdateAsync(MovieDto dto)
+    {
+        var movie = _mapper.Map<Movie>(dto);
+        return _context.Update(movie);
+    }
 }

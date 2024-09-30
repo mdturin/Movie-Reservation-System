@@ -34,6 +34,7 @@ public class BulkRepository(ApplicationDbContext context)
         where TEntity : class, IDatabaseModel
     {
         await GetDbSet<TEntity>()
+            .AsNoTracking()
             .Where(entity => ids.Contains(entity.Id))
             .ExecuteDeleteAsync();
         await _context.SaveChangesAsync();
@@ -51,12 +52,12 @@ public class BulkRepository(ApplicationDbContext context)
         return await GetDbSet<TEntity>().FindAsync(id);
     }
 
-    public async void Update<TEntity>(TEntity entity)
+    public async Task<int> Update<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel
     {
         GetDbSet<TEntity>().Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 
     public async Task<int> AddAsync<TEntity>(IEnumerable<TEntity> entities)

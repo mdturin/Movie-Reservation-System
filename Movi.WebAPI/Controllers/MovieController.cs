@@ -21,4 +21,13 @@ public class MovieController(IMovieService movieService) : ControllerBase
             return Ok("Movie was successfully added.");
         return BadRequest("Failed to add movie!");
     }
+
+    [HttpPut("update")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateMovie(MovieDto movie)
+    {
+        if (await _movieService.UpdateAsync(movie) > 0)
+            return Ok("Movie was successfully updated.");
+        return BadRequest("Failed to update movie!");
+    }
 }

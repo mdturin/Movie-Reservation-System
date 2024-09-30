@@ -7,8 +7,6 @@ namespace Movi.SeedJob.Publishers;
 public class RootUserPublisher(IBulkRepository context, UserManager<ApplicationUser> manager)
     : AResourcePublisher<ApplicationUser>(context, manager)
 {
-    public override bool IsArray => true;
-    public override bool Cleanup => false;
     public override string FileName => "JsonFiles\\RootUsers.json";
 
     public override async Task<object> PublishAsync()
