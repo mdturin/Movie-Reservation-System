@@ -15,7 +15,7 @@ public class MovieController(IMovieService movieService) : ControllerBase
 
     [HttpPost("add")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> AddMovie(AddMovieDto movie)
+    public async Task<IActionResult> AddMovie(MovieDto movie)
     {
         if (await _movieService.AddAsync(movie) > 0)
             return Ok("Movie was successfully added.");
