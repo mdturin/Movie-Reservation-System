@@ -22,7 +22,10 @@ public class BulkRepository(ApplicationDbContext context)
     public async Task DeleteAsync<TEntity>(string id)
         where TEntity : class, IDatabaseModel
     {
-        var entity = await GetDbSet<TEntity>().FindAsync(id);
+        var entity = await GetDbSet<TEntity>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id);
+
         if (entity != null)
         {
             GetDbSet<TEntity>().Remove(entity);
@@ -37,19 +40,24 @@ public class BulkRepository(ApplicationDbContext context)
             .AsNoTracking()
             .Where(entity => ids.Contains(entity.Id))
             .ExecuteDeleteAsync();
+
         await _context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
         where TEntity : class, IDatabaseModel
     {
-        return await GetDbSet<TEntity>().ToListAsync();
+        return await GetDbSet<TEntity>()
+            .AsNoTracking()
+            .ToListAsync();
     }
 
     public async Task<TEntity> GetByIdAsync<TEntity>(string id)
         where TEntity : class, IDatabaseModel
     {
-        return await GetDbSet<TEntity>().FindAsync(id);
+        return await GetDbSet<TEntity>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task<int> Update<TEntity>(TEntity entity)

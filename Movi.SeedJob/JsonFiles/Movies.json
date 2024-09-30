@@ -1,1 +1,68 @@
-[]
+[
+    {
+        "id": "movie-inception",
+        "title": "Inception",
+        "description": "A skilled thief who steals corporate secrets through dream-sharing technology is tasked with planting an idea into the mind of a CEO.",
+        "genre": "Sci-Fi, Thriller",
+        "releaseDate": "2010-07-16T00:00:00.000Z",
+        "durationInMinutes": 148,
+        "language": "English",
+        "rating": "PG-13",
+        "director": "Christopher Nolan",
+        "posterUrl": "https://example.com/inception-poster.jpg",
+        "ticketPrice": 12.99,
+        "trailerUrl": "https://example.com/inception-trailer",
+        "showtimeIds": [
+            "showtime-1",
+            "showtime-2"
+        ],
+        "castIds": [
+            "actor-leonardo-dicaprio",
+            "actor-joseph-gordon-levitt"
+        ]
+    },
+    {
+        "id": "movie-dark-knight",
+        "title": "The Dark Knight",
+        "description": "Batman sets out to dismantle the remaining criminal organizations plaguing Gotham City, but soon finds himself prey to a reign of chaos unleashed by a rising criminal mastermind known as The Joker.",
+        "genre": "Action, Crime, Drama",
+        "releaseDate": "2008-07-18T00:00:00.000Z",
+        "durationInMinutes": 152,
+        "language": "English",
+        "rating": "PG-13",
+        "director": "Christopher Nolan",
+        "posterUrl": "https://example.com/dark-knight-poster.jpg",
+        "ticketPrice": 11.99,
+        "trailerUrl": "https://example.com/dark-knight-trailer",
+        "showtimeIds": [
+            "showtime-3",
+            "showtime-4"
+        ],
+        "castIds": [
+            "actor-christian-bale",
+            "actor-heath-ledger"
+        ]
+    },
+    {
+        "id": "movie-interstellar",
+        "title": "Interstellar",
+        "description": "A team of explorers travels through a wormhole in space in an attempt to ensure humanity's survival.",
+        "genre": "Sci-Fi, Adventure, Drama",
+        "releaseDate": "2014-11-07T00:00:00.000Z",
+        "durationInMinutes": 169,
+        "language": "English",
+        "rating": "PG-13",
+        "director": "Christopher Nolan",
+        "posterUrl": "https://example.com/interstellar-poster.jpg",
+        "ticketPrice": 14.50,
+        "trailerUrl": "https://example.com/interstellar-trailer",
+        "showtimeIds": [
+            "showtime-5",
+            "showtime-6"
+        ],
+        "castIds": [
+            "actor-matthew-mcconaughey",
+            "actor-anne-hathaway"
+        ]
+    }
+]
