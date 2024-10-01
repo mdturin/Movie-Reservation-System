@@ -11,6 +11,9 @@ public static class WebApplicationExtension
             {
                 options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
             }
+
+            options.OAuthClientId("swagger-ui");
+            options.OAuthAppName("swagger-ui");
         });
 
         return app;

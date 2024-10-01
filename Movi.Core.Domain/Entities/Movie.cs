@@ -13,8 +13,8 @@ public class Movie : ADatabaseModel
     public string Rating { get; set; }
 
     // Relationship properties
-    public ICollection<Showtime> Showtimes { get; set; }
-    public ICollection<Actor> Cast { get; set; }
+    public ICollection<Showtime> Showtimes { get; set; } = [];
+    public ICollection<Actor> Cast { get; set; } = [];
     public string Director { get; set; }
     public string PosterUrl { get; set; }
 

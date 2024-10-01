@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Movi.Core.Domain.Entities;
 using Movi.Infrastructure.Data;
+using Movi.WebAPI.Configurations.Swagger;
 
 namespace Movi.WebAPI.Extensions;
 
@@ -96,6 +97,8 @@ public static class ServiceCollectionExtension
                     Array.Empty<string>()
                 }
             });
+
+            options.SchemaFilter<LoginSchemaFilter>();
         });
     }
 }
