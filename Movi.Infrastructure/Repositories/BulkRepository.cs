@@ -8,7 +8,7 @@ public class BulkRepository(ApplicationDbContext context)
     : IBulkRepository
 {
     private readonly ApplicationDbContext _context = context;
-    private DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class, IDatabaseModel
+    protected DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class, IDatabaseModel
         => _context.Set<TEntity>();
 
     public async Task<int> AddAsync<TEntity>(TEntity entity)

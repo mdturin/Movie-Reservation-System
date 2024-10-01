@@ -47,4 +47,16 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
             throw;
         }
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetMovie([FromQuery] DateTime date)
+    {
+        if (date == DateTime.MinValue)
+            return BadRequest("Invalid date!");
+
+        var moviesWithShowTimes = await _movieService
+            .GetMoviesWithShowTimes(date) ?? [];
+
+        return Ok(moviesWithShowTimes);
+    }
 }

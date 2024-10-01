@@ -28,6 +28,7 @@ builder.Services
     .AddScoped<IMovieService, MovieService>()
     .AddScoped<IBulkRepository, BulkRepository>()
     .AddScoped<IUserRepository, UserRepository>()
+    .AddScoped<IMovieRepository, MovieRepository>()
     .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 var app = builder.Build();

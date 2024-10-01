@@ -5,16 +5,16 @@ using Movi.Core.Domain.Interfaces;
 
 namespace Movi.Core.Domain.Services;
 
-public class MovieService(IMapper mapper, IBulkRepository context)
+public class MovieService(IMapper mapper, IMovieRepository context)
     : IMovieService
 {
     private readonly IMapper _mapper = mapper;
-    private readonly IBulkRepository _context = context;
+    private readonly IMovieRepository _context = context;
 
-    public async Task<int> AddAsync(MovieDto dto)
+    public Task<int> AddAsync(MovieDto dto)
     {
         var movie = _mapper.Map<Movie>(dto);
-        return await _context.AddAsync(movie);
+        return _context.AddAsync(movie);
     }
 
     public Task<int> UpdateAsync(MovieDto dto)
@@ -23,8 +23,15 @@ public class MovieService(IMapper mapper, IBulkRepository context)
         return _context.UpdateAsync(movie);
     }
 
-    public async Task DeleteAsync(string id)
+    public Task DeleteAsync(string id)
     {
-        await _context.DeleteAsync<Movie>(id);
+        return _context.DeleteAsync<Movie>(id);
+    }
+
+    public async Task<List<MovieDto>> GetMoviesWithShowTimes(DateTime date)
+    {
+        var movies = await _context
+            .GetMoviesWithShowTimes(date);
+        return _mapper.Map<List<MovieDto>>(movies);
     }
 }

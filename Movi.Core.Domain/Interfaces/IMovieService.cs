@@ -7,4 +7,5 @@ public interface IMovieService
     Task<int> AddAsync(MovieDto dto);
     Task<int> UpdateAsync(MovieDto dto);
     Task DeleteAsync(string id);
+    Task<List<MovieDto>> GetMoviesWithShowTimes(DateTime date);
 }

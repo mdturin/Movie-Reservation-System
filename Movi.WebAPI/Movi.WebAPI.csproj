@@ -24,10 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Controllers\" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\Movi.Core.Domain\Movi.Core.Domain.csproj" />
         <ProjectReference Include="..\Movi.Infrastructure\Movi.Infrastructure.csproj" />
     </ItemGroup>

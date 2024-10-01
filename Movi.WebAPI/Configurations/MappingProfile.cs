@@ -8,6 +8,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<MovieDto, Movie>();
+        CreateMap<ActorDto, Actor>().ReverseMap();
+        CreateMap<MovieDto, Movie>().ReverseMap();
+        CreateMap<ShowtimeDto, Showtime>().ReverseMap();
+        CreateMap<CinemaHallDto, CinemaHall>().ReverseMap();
     }
 }
