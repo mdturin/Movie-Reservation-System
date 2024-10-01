@@ -1,4 +1,3 @@
-using System.Collections;
 using Microsoft.EntityFrameworkCore;
 using Movi.Core.Domain.Interfaces;
 using Movi.Infrastructure.Data;
@@ -60,7 +59,7 @@ public class BulkRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<int> Update<TEntity>(TEntity entity)
+    public async Task<int> UpdateAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel
     {
         GetDbSet<TEntity>().Attach(entity);
@@ -68,10 +67,40 @@ public class BulkRepository(ApplicationDbContext context)
         return await _context.SaveChangesAsync();
     }
 
+    public async Task<int> UpdateAsync<TEntity>(IEnumerable<TEntity> entities)
+        where TEntity : class, IDatabaseModel
+    {
+        var dbSet = GetDbSet<TEntity>();
+
+        foreach (var entity in entities)
+        {
+            dbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        return await _context.SaveChangesAsync();
+    }
+
     public async Task<int> AddAsync<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : class, IDatabaseModel
     {
-        await GetDbSet<TEntity>().AddRangeAsync(entities);
+        var dbSet = GetDbSet<TEntity>();
+
+        foreach (var entity in entities)
+        {
+            var trackedEntity = _context
+                .ChangeTracker
+                .Entries<TEntity>()
+                .FirstOrDefault(e => e.Entity.Id == entity.Id);
+
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity.Entity).State = EntityState.Detached;
+            }
+
+            await dbSet.AddAsync(entity);
+        }
+
         return await _context.SaveChangesAsync();
     }
 }

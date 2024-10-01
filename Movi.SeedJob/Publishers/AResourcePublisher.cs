@@ -43,6 +43,7 @@ public abstract class AResourcePublisher<T>(IBulkRepository context, UserManager
         {
             ApplyFilter([.. models]);
             await _context.AddAsync(models);
+            await _context.UpdateAsync(models);
         }
         else if (obj is T model)
         {

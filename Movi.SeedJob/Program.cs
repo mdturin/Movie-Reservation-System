@@ -17,7 +17,10 @@ var builder = new ConfigurationBuilder()
 var config = builder.Build();
 var services = new ServiceCollection();
 services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
+{
+    options.EnableSensitiveDataLogging();
+    options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+});
 
 services.AddLogging(configure => configure.AddConsole());
 services.AddTransient<IBulkRepository, BulkRepository>();

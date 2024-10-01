@@ -9,6 +9,14 @@ namespace Movi.Infrastructure.Data;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
     : IdentityDbContext<ApplicationUser>(options)
 {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // Enable sensitive data logging
+        optionsBuilder.EnableSensitiveDataLogging();
+
+        base.OnConfiguring(optionsBuilder);
+    }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
