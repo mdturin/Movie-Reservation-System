@@ -22,4 +22,9 @@ public class MovieService(IMapper mapper, IBulkRepository context)
         var movie = _mapper.Map<Movie>(dto);
         return _context.UpdateAsync(movie);
     }
+
+    public async Task DeleteAsync(string id)
+    {
+        await _context.DeleteAsync<Movie>(id);
+    }
 }

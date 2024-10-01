@@ -6,4 +6,5 @@ public interface IMovieService
 {
     Task<int> AddAsync(MovieDto dto);
     Task<int> UpdateAsync(MovieDto dto);
+    Task DeleteAsync(string id);
 }
