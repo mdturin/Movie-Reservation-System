@@ -1,16 +1,13 @@
-using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Entities;
 
 namespace Movi.WebAPI.Controllers;
 
-[ApiController]
-[ApiVersion("1.0")]
 [Authorize(Roles = "Admin")]
-[Route("api/v{version:apiVersion}/[controller]")]
-public class AdminController(UserManager<ApplicationUser> userManager) : ControllerBase
+public class AdminController(UserManager<ApplicationUser> userManager) : AControllerBase
 {
     private readonly UserManager<ApplicationUser> _userManager = userManager;
 

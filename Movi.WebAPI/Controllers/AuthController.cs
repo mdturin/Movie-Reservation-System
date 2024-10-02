@@ -1,22 +1,17 @@
-using Asp.Versioning;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
-using Movi.Infrastructure.Security;
 
 namespace Movi.WebAPI.Controllers;
 
-[ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
 public class AuthController(
     IJwtService jwtService,
     IUserRepository userRepository,
     UserManager<ApplicationUser> userManager
-    ) : ControllerBase
+    ) : AControllerBase
 {
     private readonly IJwtService _jwtService = jwtService;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
@@ -63,8 +58,4 @@ public class AuthController(
             return Unauthorized("Invalid username or password");
         return Ok(new { Token = await _jwtService.GenerateTokenAsync(user) });
     }
-
-    [HttpPost("test")]
-    [Authorize]
-    public IActionResult Auth() => Ok("Hello");
 }

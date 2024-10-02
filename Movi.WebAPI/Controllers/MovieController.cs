@@ -1,15 +1,13 @@
-using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Interfaces;
 
 namespace Movi.WebAPI.Controllers;
 
-[ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
-public class MovieController(IMovieService movieService, ILogger<MovieController> logger) : ControllerBase
+public class MovieController(IMovieService movieService, ILogger<MovieController> logger)
+    : AControllerBase
 {
     private readonly ILogger<MovieController> _logger = logger;
     private readonly IMovieService _movieService = movieService;
