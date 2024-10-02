@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Movi.Core.Application.Services;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
-using Movi.Core.Domain.Services;
 using Movi.Infrastructure.Data;
 using Movi.Infrastructure.Repositories;
 using Movi.Infrastructure.Security;

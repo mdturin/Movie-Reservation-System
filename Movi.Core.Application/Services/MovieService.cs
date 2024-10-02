@@ -3,7 +3,7 @@ using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
 
-namespace Movi.Core.Domain.Services;
+namespace Movi.Core.Application.Services;
 
 public class MovieService(IMapper mapper, IMovieRepository context)
     : IMovieService

@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movi.Infrastructure", "Movi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movi.Core.Domain", "Movi.Core.Domain\Movi.Core.Domain.csproj", "{F0ECCC26-FEBD-4D15-9A80-D21CEFB8E250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movi.WebAPI", "Movi.WebAPI\Movi.WebAPI.csproj", "{F4022542-B521-4C0A-B1E2-3AC0152486D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movi.WebAPI", "Movi.WebAPI\Movi.WebAPI.csproj", "{F4022542-B521-4C0A-B1E2-3AC0152486D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movi.SeedJob", "Movi.SeedJob\Movi.SeedJob.csproj", "{10BE7222-A18B-41B8-8C8C-C6D8929AB885}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movi.SeedJob", "Movi.SeedJob\Movi.SeedJob.csproj", "{10BE7222-A18B-41B8-8C8C-C6D8929AB885}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movi.Core.Application", "Movi.Core.Application\Movi.Core.Application.csproj", "{23A9CBEA-808D-41F6-9F14-E9700D78CC7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{10BE7222-A18B-41B8-8C8C-C6D8929AB885}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10BE7222-A18B-41B8-8C8C-C6D8929AB885}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10BE7222-A18B-41B8-8C8C-C6D8929AB885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A9CBEA-808D-41F6-9F14-E9700D78CC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A9CBEA-808D-41F6-9F14-E9700D78CC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A9CBEA-808D-41F6-9F14-E9700D78CC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A9CBEA-808D-41F6-9F14-E9700D78CC7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
