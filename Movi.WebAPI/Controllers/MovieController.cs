@@ -48,7 +48,7 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
         }
     }
 
-    [HttpGet]
+    [HttpGet("get")]
     public async Task<IActionResult> GetMovie([FromQuery] DateTime date)
     {
         if (date == DateTime.MinValue)
@@ -58,5 +58,12 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
             .GetMoviesWithShowTimes(date) ?? [];
 
         return Ok(moviesWithShowTimes);
+    }
+
+    [HttpGet("get-all")]
+    public async Task<IActionResult> GetMovies()
+    {
+        var movies = await _movieService.GetMovies();
+        return Ok(movies);
     }
 }

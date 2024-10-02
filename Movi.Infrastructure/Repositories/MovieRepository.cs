@@ -8,6 +8,16 @@ namespace Movi.Infrastructure.Repositories;
 public class MovieRepository(ApplicationDbContext context)
     : BulkRepository(context), IMovieRepository
 {
+    public Task<List<Movie>> GetMoviesAsync()
+    {
+        return GetDbSet<Movie>()
+            .AsNoTracking()
+            .AsQueryable()
+            .Include(m => m.Showtimes)
+            .Include(m => m.Cast)
+            .ToListAsync();
+    }
+
     public Task<List<Movie>> GetMoviesWithShowTimes(DateTime date)
     {
         var dbSet = GetDbSet<Movie>();
