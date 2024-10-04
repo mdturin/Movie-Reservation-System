@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Interfaces;
+using Movi.WebAPI.Params;
 
 namespace Movi.WebAPI.Controllers;
 
@@ -47,19 +48,19 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     }
 
     [HttpGet("get")]
-    public async Task<IActionResult> GetMovie([FromQuery] DateTime date, [FromQuery] string genre)
+    public async Task<IActionResult> GetMovie([FromQuery] GetMovieQueryParams queryParams)
     {
-        if (date != DateTime.MinValue)
+        if (queryParams.Date != DateTime.MinValue)
         {
             var moviesWithShowTimes = await _movieService
-                .GetMoviesWithShowTimes(date) ?? [];
+                .GetMoviesWithShowTimes(queryParams.Date) ?? [];
 
             return Ok(moviesWithShowTimes);
         }
 
-        if (!string.IsNullOrWhiteSpace(genre))
+        if (!string.IsNullOrWhiteSpace(queryParams.Genre))
         {
-            var genres = genre.Split(",");
+            var genres = queryParams.Genre.Split(",");
             var moviesWithShowTimes = await _movieService
                 .GetMoviesWithShowTimes(genres) ?? [];
 
