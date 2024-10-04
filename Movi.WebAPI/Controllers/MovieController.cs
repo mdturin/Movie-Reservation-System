@@ -47,20 +47,25 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     }
 
     [HttpGet("get")]
-    public async Task<IActionResult> GetMovie([FromQuery] DateTime date)
+    public async Task<IActionResult> GetMovie([FromQuery] DateTime date, [FromQuery] string genre)
     {
-        if (date == DateTime.MinValue)
-            return BadRequest("Invalid date!");
+        if (date != DateTime.MinValue)
+        {
+            var moviesWithShowTimes = await _movieService
+                .GetMoviesWithShowTimes(date) ?? [];
 
-        var moviesWithShowTimes = await _movieService
-            .GetMoviesWithShowTimes(date) ?? [];
+            return Ok(moviesWithShowTimes);
+        }
 
-        return Ok(moviesWithShowTimes);
-    }
+        if (!string.IsNullOrWhiteSpace(genre))
+        {
+            var genres = genre.Split(",");
+            var moviesWithShowTimes = await _movieService
+                .GetMoviesWithShowTimes(genres) ?? [];
 
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetMovies()
-    {
+            return Ok(moviesWithShowTimes);
+        }
+
         var movies = await _movieService.GetMovies();
         return Ok(movies);
     }

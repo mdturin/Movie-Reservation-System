@@ -11,6 +11,10 @@ public class BulkRepository(ApplicationDbContext context)
     protected DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class, IDatabaseModel
         => _context.Set<TEntity>();
 
+    protected IQueryable<TEntity> GetDbSetAsNoTrackingQueryable<TEntity>()
+        where TEntity : class, IDatabaseModel
+            => _context.Set<TEntity>().AsNoTracking().AsQueryable();
+
     public async Task<int> AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel
     {

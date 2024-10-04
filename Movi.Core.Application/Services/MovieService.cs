@@ -35,6 +35,13 @@ public class MovieService(IMapper mapper, IMovieRepository context)
         return _mapper.Map<List<MovieDto>>(movies);
     }
 
+    public async Task<List<MovieDto>> GetMoviesWithShowTimes(IEnumerable<string> genres)
+    {
+        var movies = await _context
+            .GetMoviesWithShowTimes(genres);
+        return _mapper.Map<List<MovieDto>>(movies);
+    }
+
     public async Task<List<MovieDto>> GetMovies()
     {
         var movies = await _context.GetMoviesAsync();

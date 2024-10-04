@@ -9,4 +9,5 @@ public interface IMovieService
     Task DeleteAsync(string id);
     Task<List<MovieDto>> GetMovies();
     Task<List<MovieDto>> GetMoviesWithShowTimes(DateTime date);
+    Task<List<MovieDto>> GetMoviesWithShowTimes(IEnumerable<string> genres);
 }

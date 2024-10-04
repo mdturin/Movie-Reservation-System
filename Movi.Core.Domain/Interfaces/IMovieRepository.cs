@@ -5,5 +5,6 @@ namespace Movi.Core.Domain.Interfaces;
 public interface IMovieRepository : IBulkRepository
 {
     Task<List<Movie>> GetMoviesWithShowTimes(DateTime date);
+    Task<List<Movie>> GetMoviesWithShowTimes(IEnumerable<string> genres);
     Task<List<Movie>> GetMoviesAsync();
 }

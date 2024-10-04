@@ -10,9 +10,8 @@ public class MovieRepository(ApplicationDbContext context)
 {
     public Task<List<Movie>> GetMoviesAsync()
     {
-        return GetDbSet<Movie>()
-            .AsNoTracking()
-            .AsQueryable()
+        var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
+        return dbSet
             .Include(m => m.Showtimes)
             .Include(m => m.Cast)
             .ToListAsync();
@@ -20,12 +19,20 @@ public class MovieRepository(ApplicationDbContext context)
 
     public Task<List<Movie>> GetMoviesWithShowTimes(DateTime date)
     {
-        var dbSet = GetDbSet<Movie>();
+        var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
         return dbSet
-            .AsNoTracking()
-            .AsQueryable()
             .Include(m => m.Showtimes)
             .Where(m => m.Showtimes.Any(s => s.StartTime.Equals(date)))
+            .ToListAsync();
+    }
+
+    public Task<List<Movie>> GetMoviesWithShowTimes(string[] genres)
+    {
+        var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
+        return dbSet
+            .Where(m => genres.Any(g => m.Genre
+                .Contains(g, StringComparison.OrdinalIgnoreCase)))
+            .Include(m => m.Showtimes)
             .ToListAsync();
     }
 }
