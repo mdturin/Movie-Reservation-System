@@ -26,12 +26,11 @@ public class MovieRepository(ApplicationDbContext context)
             .ToListAsync();
     }
 
-    public Task<List<Movie>> GetMoviesWithShowTimes(string[] genres)
+    public Task<List<Movie>> GetMoviesWithShowTimes(IEnumerable<string> genres)
     {
         var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
         return dbSet
-            .Where(m => genres.Any(g => m.Genre
-                .Contains(g, StringComparison.OrdinalIgnoreCase)))
+            .Where(m => genres.Any(g => m.Genre.ToLower().Contains(g)))
             .Include(m => m.Showtimes)
             .ToListAsync();
     }
