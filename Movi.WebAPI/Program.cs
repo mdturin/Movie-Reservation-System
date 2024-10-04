@@ -26,9 +26,11 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services
     .AddScoped<IJwtService, JwtService>()
     .AddScoped<IMovieService, MovieService>()
+    .AddScoped<IShowtimeService, ShowtimeService>()
     .AddScoped<IBulkRepository, BulkRepository>()
     .AddScoped<IUserRepository, UserRepository>()
     .AddScoped<IMovieRepository, MovieRepository>()
+    .AddScoped<IShowtimeRepository, ShowtimeRepository>()
     .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
 var app = builder.Build();
