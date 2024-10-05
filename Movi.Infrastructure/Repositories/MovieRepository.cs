@@ -9,11 +9,11 @@ namespace Movi.Infrastructure.Repositories;
 public class MovieRepository(ApplicationDbContext context)
     : BulkRepository(context), IMovieRepository
 {
-    public Task<List<Movie>> GetMoviesAsync(Expression<Func<Movie, bool>> exp)
+    public Task<List<Movie>> GetMoviesAsync(Expression<Func<Movie, bool>> conditionExpression)
     {
         return GetDbSetAsNoTrackingQueryable<Movie>()
             .Include(m => m.Showtimes)
-            .Where(exp)
+            .Where(conditionExpression)
             .ToListAsync();
     }
 }
