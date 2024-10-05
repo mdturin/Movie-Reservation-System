@@ -25,22 +25,4 @@ public class MovieRepository(ApplicationDbContext context)
             .Where(exp)
             .ToListAsync();
     }
-
-    public Task<List<Movie>> GetMoviesWithShowTimes(DateTime date)
-    {
-        var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
-        return dbSet
-            .Include(m => m.Showtimes)
-            .Where(m => m.Showtimes.Any(s => s.StartTime.Equals(date)))
-            .ToListAsync();
-    }
-
-    public Task<List<Movie>> GetMoviesWithShowTimes(IEnumerable<string> genres)
-    {
-        var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
-        return dbSet
-            .Where(m => genres.Any(g => m.Genre.ToLower().Contains(g)))
-            .Include(m => m.Showtimes)
-            .ToListAsync();
-    }
 }

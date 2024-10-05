@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
-using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
 using Movi.WebAPI.Params;
 

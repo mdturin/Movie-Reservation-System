@@ -40,8 +40,10 @@ public class MovieService(IMapper mapper, IMovieRepository context)
 
     public async Task<List<MovieDto>> GetMoviesWithShowTimes(IEnumerable<string> genres)
     {
-        var movies = await _context
-            .GetMoviesWithShowTimes(genres);
+        var genreCondition = new AnyContainsCondition<Movie>(
+            nameof(Movie.Genre), genres, true);
+        var exp = genreCondition.ToExpression();
+        var movies = await _context.GetMovies(exp);
         return _mapper.Map<List<MovieDto>>(movies);
     }
 
