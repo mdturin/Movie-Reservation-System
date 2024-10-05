@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
@@ -14,6 +15,14 @@ public class MovieRepository(ApplicationDbContext context)
         return dbSet
             .Include(m => m.Showtimes)
             .Include(m => m.Cast)
+            .ToListAsync();
+    }
+
+    public Task<List<Movie>> GetMovies(Expression<Func<Movie, bool>> exp)
+    {
+        return GetDbSetAsNoTrackingQueryable<Movie>()
+            .Include(m => m.Showtimes)
+            .Where(exp)
             .ToListAsync();
     }
 

@@ -1,4 +1,5 @@
 using AutoMapper;
+using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
@@ -30,8 +31,10 @@ public class MovieService(IMapper mapper, IMovieRepository context)
 
     public async Task<List<MovieDto>> GetMoviesWithShowTimes(DateTime date)
     {
-        var movies = await _context
-            .GetMoviesWithShowTimes(date);
+        var startTimeCondition = new FieldCondition<Showtime>(nameof(Showtime.StartTime), date);
+        var showTimesCondition = new AnyCondition<Movie, Showtime>(nameof(Movie.Showtimes), startTimeCondition);
+        var exp = showTimesCondition.ToExpression();
+        var movies = await _context.GetMovies(exp);
         return _mapper.Map<List<MovieDto>>(movies);
     }
 

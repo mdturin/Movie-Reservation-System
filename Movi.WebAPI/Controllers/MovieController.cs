@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
+using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
 using Movi.WebAPI.Params;
 
@@ -50,10 +52,10 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     [HttpGet("get")]
     public async Task<IActionResult> GetMovie([FromQuery] GetMovieQueryParams queryParams)
     {
-        if (queryParams.Date != DateTime.MinValue)
+        if (queryParams.ShowStartTime != DateTime.MinValue)
         {
             var moviesWithShowTimes = await _movieService
-                .GetMoviesWithShowTimes(queryParams.Date) ?? [];
+                .GetMoviesWithShowTimes(queryParams.ShowStartTime) ?? [];
 
             return Ok(moviesWithShowTimes);
         }
