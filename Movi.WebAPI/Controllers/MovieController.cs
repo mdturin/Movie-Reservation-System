@@ -50,24 +50,8 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     [HttpGet("get")]
     public async Task<IActionResult> GetMovie([FromQuery] GetMovieQueryParams queryParams)
     {
-        if (queryParams.ShowStartTime != DateTime.MinValue)
-        {
-            var moviesWithShowTimes = await _movieService
-                .GetMoviesWithShowTimes(queryParams.ShowStartTime) ?? [];
-
-            return Ok(moviesWithShowTimes);
-        }
-
-        if (!string.IsNullOrWhiteSpace(queryParams.Genre))
-        {
-            var genres = queryParams.Genre.Split(",");
-            var moviesWithShowTimes = await _movieService
-                .GetMoviesWithShowTimes(genres) ?? [];
-
-            return Ok(moviesWithShowTimes);
-        }
-
-        var movies = await _movieService.GetMovies();
+        var exp = queryParams.ToExpression();
+        var movies = await _movieService.GetMoviesAsync(exp);
         return Ok(movies);
     }
 }

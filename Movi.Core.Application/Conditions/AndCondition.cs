@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Interfaces;
 
@@ -9,6 +9,9 @@ public class AndCondition<T>(params ICondition<T>[] conditions)
 {
     public override Expression<Func<T, bool>> ToExpression()
     {
+        if (Conditions.Count == 0)
+            return (x) => true;
+
         var combinedExpression = Conditions
             .Select(c => c.ToExpression())
             .Aggregate((expr1, expr2) =>

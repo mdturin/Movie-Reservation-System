@@ -1,5 +1,5 @@
+using System.Linq.Expressions;
 using AutoMapper;
-using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
@@ -29,27 +29,9 @@ public class MovieService(IMapper mapper, IMovieRepository context)
         return _context.DeleteAsync<Movie>(id);
     }
 
-    public async Task<List<MovieDto>> GetMoviesWithShowTimes(DateTime date)
+    public async Task<List<MovieDto>> GetMoviesAsync(Expression<Func<Movie, bool>> exp)
     {
-        var startTimeCondition = new FieldCondition<Showtime>(nameof(Showtime.StartTime), date);
-        var showTimesCondition = new AnyCondition<Movie, Showtime>(nameof(Movie.Showtimes), startTimeCondition);
-        var exp = showTimesCondition.ToExpression();
-        var movies = await _context.GetMovies(exp);
-        return _mapper.Map<List<MovieDto>>(movies);
-    }
-
-    public async Task<List<MovieDto>> GetMoviesWithShowTimes(IEnumerable<string> genres)
-    {
-        var genreCondition = new AnyContainsCondition<Movie>(
-            nameof(Movie.Genre), genres, true);
-        var exp = genreCondition.ToExpression();
-        var movies = await _context.GetMovies(exp);
-        return _mapper.Map<List<MovieDto>>(movies);
-    }
-
-    public async Task<List<MovieDto>> GetMovies()
-    {
-        var movies = await _context.GetMoviesAsync();
+        var movies = await _context.GetMoviesAsync(exp);
         return _mapper.Map<List<MovieDto>>(movies);
     }
 }

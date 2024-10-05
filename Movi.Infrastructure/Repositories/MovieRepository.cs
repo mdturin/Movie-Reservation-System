@@ -18,7 +18,7 @@ public class MovieRepository(ApplicationDbContext context)
             .ToListAsync();
     }
 
-    public Task<List<Movie>> GetMovies(Expression<Func<Movie, bool>> exp)
+    public Task<List<Movie>> GetMoviesAsync(Expression<Func<Movie, bool>> exp)
     {
         return GetDbSetAsNoTrackingQueryable<Movie>()
             .Include(m => m.Showtimes)
