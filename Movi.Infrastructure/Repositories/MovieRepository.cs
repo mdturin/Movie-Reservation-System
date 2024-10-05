@@ -9,15 +9,6 @@ namespace Movi.Infrastructure.Repositories;
 public class MovieRepository(ApplicationDbContext context)
     : BulkRepository(context), IMovieRepository
 {
-    public Task<List<Movie>> GetMoviesAsync()
-    {
-        var dbSet = GetDbSetAsNoTrackingQueryable<Movie>();
-        return dbSet
-            .Include(m => m.Showtimes)
-            .Include(m => m.Cast)
-            .ToListAsync();
-    }
-
     public Task<List<Movie>> GetMoviesAsync(Expression<Func<Movie, bool>> exp)
     {
         return GetDbSetAsNoTrackingQueryable<Movie>()
