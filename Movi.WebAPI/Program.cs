@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Movi.Core.Application.Conditions;
 using Movi.Core.Application.Services;
 using Movi.Core.Domain.Entities;
 using Movi.Core.Domain.Interfaces;
@@ -30,7 +29,6 @@ builder.Services
     .AddScoped<IShowtimeService, ShowtimeService>()
     .AddScoped<IBulkRepository, BulkRepository>()
     .AddScoped<IUserRepository, UserRepository>()
-    .AddScoped<IMovieRepository, MovieRepository>()
     .AddScoped<IShowtimeRepository, ShowtimeRepository>()
     .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 

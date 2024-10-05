@@ -48,10 +48,8 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     }
 
     [HttpGet("get")]
-    public async Task<IActionResult> GetMovie([FromQuery] GetMovieQueryParams queryParams)
+    public async Task<IActionResult> GetMovies([FromQuery] GetMovieQueryParams queryParams)
     {
-        var exp = queryParams.ToExpression();
-        var movies = await _movieService.GetMoviesAsync(exp);
-        return Ok(movies);
+        return Ok(await _movieService.GetMoviesAsync(queryParams.ToExpression()));
     }
 }

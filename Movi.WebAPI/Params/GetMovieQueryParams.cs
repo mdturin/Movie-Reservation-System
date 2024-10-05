@@ -36,6 +36,6 @@ public class GetMovieQueryParams
 
         var genres = Genre.Split(",");
         var genreCondition = new AnyContainsCondition<Movie>(nameof(Movie.Genre), genres, true);
-        result.AddCondition(result);
+        result.AddCondition(genreCondition);
     }
 }

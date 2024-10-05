@@ -1,6 +1,8 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Movi.Core.Domain.Interfaces;
 using Movi.Infrastructure.Data;
+using Movi.Infrastructure.Extensions;
 
 namespace Movi.Infrastructure.Repositories;
 
@@ -45,6 +47,17 @@ public class BulkRepository(ApplicationDbContext context)
             .ExecuteDeleteAsync();
 
         await _context.SaveChangesAsync();
+    }
+
+    public Task<List<TEntity>> GetItemsAsync<TEntity>(
+        Expression<Func<TEntity, bool>> conditionExpression,
+        params Expression<Func<TEntity, object>>[] includes)
+            where TEntity : class, IDatabaseModel
+    {
+        return GetDbSetAsNoTrackingQueryable<TEntity>()
+            .ApplyIncludes(includes)
+            .Where(conditionExpression)
+            .ToListAsync();
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
