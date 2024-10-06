@@ -12,5 +12,6 @@ public class MappingProfile : Profile
         CreateMap<MovieDto, Movie>().ReverseMap();
         CreateMap<ShowtimeDto, Showtime>().ReverseMap();
         CreateMap<CinemaHallDto, CinemaHall>().ReverseMap();
+        CreateMap<SeatDto, Seat>().ReverseMap();
     }
 }

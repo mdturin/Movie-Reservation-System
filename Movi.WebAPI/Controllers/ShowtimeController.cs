@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Entities;
@@ -44,5 +45,13 @@ public class ShowtimeController(IShowtimeRepository context, IMapper mapper) : A
             return NotFound($"Showtime not found with id({id})");
 
         return Ok(_mapper.Map<ShowtimeDto>(showTime));
+    }
+
+    [HttpGet("{showtimeId}/seats")]
+    public async Task<IActionResult> GetAvailableSeats(string showtimeId)
+    {
+        var fieldCondition = new FieldCondition<Seat>(nameof(Seat.ShowtimeId), showtimeId);
+        var seats = await _context.GetItemsAsync(fieldCondition.ToExpression());
+        return Ok(_mapper.Map<List<SeatDto>>(seats));
     }
 }

@@ -16,6 +16,11 @@ public interface IBulkRepository
     Task DeleteAsync<TEntity>(IEnumerable<string> ids)
         where TEntity : class, IDatabaseModel;
 
+    Task<TEntity> GetItemAsync<TEntity>(
+        Expression<Func<TEntity, bool>> conditionExpression,
+        params Expression<Func<TEntity, object>>[] includes)
+            where TEntity : class, IDatabaseModel;
+
     Task<List<TEntity>> GetItemsAsync<TEntity>(
         Expression<Func<TEntity, bool>> conditionExpression,
         params Expression<Func<TEntity, object>>[] includes)

@@ -49,6 +49,16 @@ public class BulkRepository(ApplicationDbContext context)
         await _context.SaveChangesAsync();
     }
 
+    public Task<TEntity> GetItemAsync<TEntity>(
+        Expression<Func<TEntity, bool>> conditionExpression,
+        params Expression<Func<TEntity, object>>[] includes)
+            where TEntity : class, IDatabaseModel
+    {
+        return GetDbSetAsNoTrackingQueryable<TEntity>()
+            .ApplyIncludes(includes)
+            .FirstOrDefaultAsync(conditionExpression);
+    }
+
     public Task<List<TEntity>> GetItemsAsync<TEntity>(
         Expression<Func<TEntity, bool>> conditionExpression,
         params Expression<Func<TEntity, object>>[] includes)
