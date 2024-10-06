@@ -27,6 +27,7 @@ builder.Services
     .AddScoped<IJwtService, JwtService>()
     .AddScoped<IMovieService, MovieService>()
     .AddScoped<IShowtimeService, ShowtimeService>()
+    .AddScoped<ISeatService, SeatService>()
     .AddScoped<IBulkRepository, BulkRepository>()
     .AddScoped<IUserRepository, UserRepository>()
     .AddScoped<IShowtimeRepository, ShowtimeRepository>()

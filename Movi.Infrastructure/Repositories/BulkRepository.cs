@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Movi.Core.Domain.Interfaces;
 using Movi.Infrastructure.Data;
 using Movi.Infrastructure.Extensions;
@@ -16,6 +17,9 @@ public class BulkRepository(ApplicationDbContext context)
     protected IQueryable<TEntity> GetDbSetAsNoTrackingQueryable<TEntity>()
         where TEntity : class, IDatabaseModel
             => _context.Set<TEntity>().AsNoTracking().AsQueryable();
+
+    public IDbContextTransaction BeginTransaction()
+        => _context.Database.BeginTransaction();
 
     public async Task<int> AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel

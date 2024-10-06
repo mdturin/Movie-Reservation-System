@@ -1,9 +1,12 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Movi.Core.Domain.Interfaces;
 
 public interface IBulkRepository
 {
+    IDbContextTransaction BeginTransaction();
+
     Task<int> AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel;
 
