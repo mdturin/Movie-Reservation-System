@@ -35,16 +35,8 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteMovie(string movieId)
     {
-        try
-        {
-            await _movieService.DeleteAsync(movieId);
-            return Ok("Movie was successfully deleted.");
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex.Message);
-            throw;
-        }
+        await _movieService.DeleteAsync(movieId);
+        return Ok("Movie was successfully deleted.");
     }
 
     [HttpGet("get")]
