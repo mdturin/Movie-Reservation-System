@@ -7,5 +7,6 @@ namespace Movi.SeedJob.Publishers;
 public class CinemaHallPublisher(IBulkRepository context, UserManager<ApplicationUser> manager)
     : AResourcePublisher<CinemaHall>(context, manager)
 {
+    public override int Order => 3;
     public override string FileName => "JsonFiles\\CinemaHalls.json";
 }

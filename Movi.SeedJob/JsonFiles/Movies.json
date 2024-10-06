@@ -12,42 +12,6 @@
         "posterUrl": "https://example.com/inception-poster.jpg",
         "ticketPrice": 12.99,
         "trailerUrl": "https://example.com/inception-trailer",
-        "showtimes": [
-            {
-                "id": "showtime-1",
-                "startTime": "2024-10-01T14:00:00.000Z",
-                "cinemaHall": {
-                    "id": "cinemahall-imax-theater",
-                    "name": "IMAX Theater",
-                    "totalSeats": 350
-                },
-                "movieId": "movie-inception"
-            },
-            {
-                "id": "showtime-2",
-                "startTime": "2024-10-02T19:00:00.000Z",
-                "cinemaHall": {
-                    "id": "cinemahall-luxury-cinema",
-                    "name": "Luxury Cinema",
-                    "totalSeats": 100
-                },
-                "movieId": "movie-inception"
-            }
-        ],
-        "cast": [
-            {
-                "id": "actor-leonardo-dicaprio",
-                "name": "Leonardo DiCaprio",
-                "role": "Cobb",
-                "photoUrl": "https://example.com/leonardo-dicaprio.jpg"
-            },
-            {
-                "id": "actor-joseph-gordon-levitt",
-                "name": "Joseph Gordon-Levitt",
-                "role": "Arthur",
-                "photoUrl": "https://example.com/joseph-gordon-levitt.jpg"
-            }
-        ]
     },
     {
         "id": "movie-dark-knight",
@@ -62,42 +26,6 @@
         "posterUrl": "https://example.com/dark-knight-poster.jpg",
         "ticketPrice": 11.99,
         "trailerUrl": "https://example.com/dark-knight-trailer",
-        "showtimes": [
-            {
-                "id": "showtime-3",
-                "startTime": "2024-10-03T16:00:00.000Z",
-                "cinemaHall": {
-                    "id": "cinemahall-cineplex-7",
-                    "name": "Cineplex 7",
-                    "totalSeats": 200
-                },
-                "movieId": "movie-dark-knight"
-            },
-            {
-                "id": "showtime-4",
-                "startTime": "2024-10-04T19:30:00.000Z",
-                "cinemaHall": {
-                    "id": "cinemahall-grand-cinema",
-                    "name": "Grand Cinema",
-                    "totalSeats": 150
-                },
-                "movieId": "movie-dark-knight"
-            }
-        ],
-        "cast": [
-            {
-                "id": "actor-christian-bale",
-                "name": "Christian Bale",
-                "role": "Bruce Wayne / Batman",
-                "photoUrl": "https://example.com/christian-bale.jpg"
-            },
-            {
-                "id": "actor-heath-ledger",
-                "name": "Heath Ledger",
-                "role": "Joker",
-                "photoUrl": "https://example.com/heath-ledger.jpg"
-            }
-        ]
     },
     {
         "id": "movie-interstellar",
@@ -112,33 +40,5 @@
         "posterUrl": "https://example.com/interstellar-poster.jpg",
         "ticketPrice": 14.50,
         "trailerUrl": "https://example.com/interstellar-trailer",
-        "showtimes": [
-            {
-                "id": "showtime-5",
-                "startTime": "2024-10-05T16:00:00.000Z",
-                "cinemaHallId": "cinemahall-imax-theater",
-                "movieId": "movie-interstellar"
-            },
-            {
-                "id": "showtime-6",
-                "startTime": "2024-10-06T19:00:00.000Z",
-                "cinemaHallId": "cinemahall-luxury-cinema",
-                "movieId": "movie-interstellar"
-            }
-        ],
-        "cast": [
-            {
-                "id": "actor-matthew-mcconaughey",
-                "name": "Matthew McConaughey",
-                "role": "Cooper",
-                "photoUrl": "https://example.com/matthew-mcconaughey.jpg"
-            },
-            {
-                "id": "actor-anne-hathaway",
-                "name": "Anne Hathaway",
-                "role": "Brand",
-                "photoUrl": "https://example.com/anne-hathaway.jpg"
-            }
-        ]
     }
 ]

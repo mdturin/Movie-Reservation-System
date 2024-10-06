@@ -43,6 +43,9 @@
         <None Update="JsonFiles\RootUsers.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Update="JsonFiles\Seats.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
         <None Update="JsonFiles\Showtimes.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>

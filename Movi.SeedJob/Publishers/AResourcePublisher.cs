@@ -7,12 +7,14 @@ namespace Movi.SeedJob.Publishers;
 
 public interface IResourcePublisher
 {
+    int Order { get; }
     Task<object> PublishAsync();
 }
 
 public abstract class AResourcePublisher<T>(IBulkRepository context, UserManager<ApplicationUser> manager)
     : IResourcePublisher where T : class, IDatabaseModel
 {
+    public abstract int Order { get; }
     public abstract string FileName { get; }
     public virtual bool Cleanup { get; } = true;
     public virtual bool IsArray { get; } = true;

@@ -1,1 +1,38 @@
-[]
+[
+    {
+        "id": "actor-leonardo-dicaprio",
+        "name": "Leonardo DiCaprio",
+        "role": "Cobb",
+        "photoUrl": "https://example.com/leonardo-dicaprio.jpg"
+    },
+    {
+        "id": "actor-joseph-gordon-levitt",
+        "name": "Joseph Gordon-Levitt",
+        "role": "Arthur",
+        "photoUrl": "https://example.com/joseph-gordon-levitt.jpg"
+    },
+    {
+        "id": "actor-christian-bale",
+        "name": "Christian Bale",
+        "role": "Bruce Wayne / Batman",
+        "photoUrl": "https://example.com/christian-bale.jpg"
+    },
+    {
+        "id": "actor-heath-ledger",
+        "name": "Heath Ledger",
+        "role": "Joker",
+        "photoUrl": "https://example.com/heath-ledger.jpg"
+    },
+    {
+        "id": "actor-matthew-mcconaughey",
+        "name": "Matthew McConaughey",
+        "role": "Cooper",
+        "photoUrl": "https://example.com/matthew-mcconaughey.jpg"
+    },
+    {
+        "id": "actor-anne-hathaway",
+        "name": "Anne Hathaway",
+        "role": "Brand",
+        "photoUrl": "https://example.com/anne-hathaway.jpg"
+    }
+]

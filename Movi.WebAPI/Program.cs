@@ -90,7 +90,7 @@ static async Task SeedDatabase(WebApplication app)
         await context.Database.EnsureCreatedAsync();
         await context.Database.MigrateAsync();
         await InitializeRoles(services);
-        await InitializeRootAdmin(services);
+        //await InitializeRootAdmin(services);
     }
     catch (Exception ex)
     {
@@ -99,32 +99,32 @@ static async Task SeedDatabase(WebApplication app)
     }
 }
 
-static async Task InitializeRootAdmin(IServiceProvider serviceProvider)
-{
-    var userManager = serviceProvider
-        .GetRequiredService<UserManager<ApplicationUser>>();
+//static async Task InitializeRootAdmin(IServiceProvider serviceProvider)
+//{
+//    var userManager = serviceProvider
+//        .GetRequiredService<UserManager<ApplicationUser>>();
 
-    var rootUser = new ApplicationUser()
-    {
-        Email = "root@gmail.com",
-        UserName = "root-user",
-        EmailConfirmed = true,
-    };
+//    var rootUser = new ApplicationUser()
+//    {
+//        Email = "root@gmail.com",
+//        UserName = "root-user",
+//        EmailConfirmed = true,
+//    };
 
-    if (await userManager.FindByEmailAsync(rootUser.Email) != null)
-    {
-        await userManager.DeleteAsync(rootUser);
-    }
+//    if (await userManager.FindByEmailAsync(rootUser.Email) != null)
+//    {
+//        await userManager.DeleteAsync(rootUser);
+//    }
 
-    await userManager.CreateAsync(rootUser, "Root@123");
-    if (!await userManager.IsInRoleAsync(rootUser, "Admin"))
-    {
-        var result = await userManager
-            .AddToRoleAsync(rootUser, "Admin");
-        if (!result.Succeeded)
-        {
-            foreach (var error in result.Errors)
-                Console.WriteLine($"Error adding root user to Admin role: {error.Description}");
-        }
-    }
-}
+//    await userManager.CreateAsync(rootUser, "Root@123");
+//    if (!await userManager.IsInRoleAsync(rootUser, "Admin"))
+//    {
+//        var result = await userManager
+//            .AddToRoleAsync(rootUser, "Admin");
+//        if (!result.Succeeded)
+//        {
+//            foreach (var error in result.Errors)
+//                Console.WriteLine($"Error adding root user to Admin role: {error.Description}");
+//        }
+//    }
+//}

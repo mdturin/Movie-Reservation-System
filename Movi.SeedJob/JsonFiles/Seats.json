@@ -1,0 +1,122 @@
+[
+    {
+        "seatNumber": "A1",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A2",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A3",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A4",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A5",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A6",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A7",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A8",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A9",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "A10",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B1",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B2",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B3",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B4",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B5",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B6",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B7",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B8",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B9",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    },
+    {
+        "seatNumber": "B10",
+        "isAvailable": true,
+        "showtimeId": "showtime-1",
+        "cinemaHallId": "cinemahall-imax-theater"
+    }
+]

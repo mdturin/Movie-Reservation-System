@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,17 +31,69 @@ services
     .AddDefaultTokenProviders();
 
 var serviceProvider = services.BuildServiceProvider();
+await SeedDatabaseAsync(serviceProvider);
+
 var userManager = serviceProvider
     .GetRequiredService<UserManager<ApplicationUser>>();
 var context = serviceProvider
     .GetRequiredService<IBulkRepository>();
 
 var publisherTypes = GetAllImplementations<IResourcePublisher>();
+var resourceInstances = new List<IResourcePublisher>();
 foreach (var type in publisherTypes)
 {
-    var instance = Activator
-        .CreateInstance(type, context, userManager) as IResourcePublisher;
-    await instance?.PublishAsync();
+    if (Activator.CreateInstance(type, context, userManager) is IResourcePublisher instance)
+        resourceInstances.Add(instance);
+}
+
+var instances = resourceInstances.OrderBy(r => r.Order);
+foreach (var instance in instances)
+    await instance.PublishAsync();
+
+static async Task SeedDatabaseAsync(IServiceProvider services)
+{
+    var context = services
+        .GetRequiredService<ApplicationDbContext>();
+    try
+    {
+        await context.Database.EnsureCreatedAsync();
+        await context.Database.MigrateAsync();
+        await InitializeRoles(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+    }
+}
+
+static async Task InitializeRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider
+        .GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roleNames = { "Admin", "User" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            var result = await roleManager
+                .CreateAsync(new IdentityRole(roleName));
+            if (result.Succeeded)
+                Console.WriteLine($"Role '{roleName}' created successfully.");
+            else
+            {
+                Console.WriteLine($"Error creating role '{roleName}':");
+                foreach (var error in result.Errors)
+                {
+                    Console.WriteLine($"- {error.Description}");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine($"Role '{roleName}' already exist.");
+        }
+    }
 }
 
 static List<Type> GetAllImplementations<TBase>()
