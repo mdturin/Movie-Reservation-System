@@ -13,6 +13,13 @@ public class ShowtimeController(IShowtimeRepository context, IMapper mapper) : A
     private readonly IMapper _mapper = mapper;
     private readonly IShowtimeRepository _context = context;
 
+    [HttpGet]
+    public async Task<IActionResult> GetShowtimes()
+    {
+        var showTimes = await _context.GetAllAsync<Showtime>();
+        return Ok(_mapper.Map<List<ShowtimeDto>>(showTimes));
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateShowtime([FromBody] ShowtimeDto input)
     {

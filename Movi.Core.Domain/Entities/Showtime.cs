@@ -9,4 +9,5 @@ public class Showtime : ADatabaseModel
     public CinemaHall CinemaHall { get; set; }
     public string MovieId { get; set; }
     public Movie Movie { get; set; }
+    public ICollection<Seat> Seats { get; set; }
 }
