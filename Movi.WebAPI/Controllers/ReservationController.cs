@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
@@ -6,17 +7,19 @@ using Movi.Core.Domain.Interfaces;
 
 namespace Movi.WebAPI.Controllers;
 
-public class ReservationController(IBulkRepository context, ISeatService seatService) : AControllerBase
+public class ReservationController(
+    IMapper mapper,
+    ISeatRepository context) : AControllerBase
 {
-    private readonly IBulkRepository _context = context;
-    private readonly ISeatService _seatService = seatService;
+    private readonly IMapper _mapper = mapper;
+    private readonly ISeatRepository _context = context;
 
     [HttpPost]
     public async Task<IActionResult> ReserveSeats([FromBody] ReservationDto request)
     {
         using var session = _context.BeginTransaction();
-        var seats = await _seatService.GetAvailableSeatsAsync(request.SeatIds);
-        if (seats.Count != request.SeatIds.Count)
+        var seats = await _context.GetAvailableSeatsAsync(request.SeatNumbers);
+        if (seats.Count != request.SeatNumbers.Count)
         {
             return BadRequest("Some seats are not available");
         }
@@ -37,8 +40,17 @@ public class ReservationController(IBulkRepository context, ISeatService seatSer
         });
 
         await _context.AddAsync(reservations);
+        await _context.UpdateAsync(seats);
         await session.CommitAsync();
 
         return Ok("Seats reserved successfully");
+    }
+
+    [HttpGet("available")]
+    public async Task<IActionResult> AvailableSeats()
+    {
+        var seats = await _context
+            .GetAvailableSeatsAsync();
+        return Ok(_mapper.Map<List<SeatDto>>(seats));
     }
 }

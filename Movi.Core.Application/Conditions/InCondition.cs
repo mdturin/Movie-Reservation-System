@@ -14,12 +14,15 @@ public class InCondition<T>(string fieldName, IEnumerable<object> values)
         var parameter = Expression.Parameter(typeof(T), "x");
         var field = Expression.PropertyOrField(parameter, FieldName);
 
-        var constant = Expression.Constant(Values);
-        var containsMethod = typeof(Enumerable).GetMethods()
-            .First(m => m.Name == "Contains" && m.GetParameters().Length == 2)
-            .MakeGenericMethod(field.Type);
+        // This is the key difference: We cast the values list to the appropriate type
+        var containsExpression = Expression.Call(
+            typeof(Enumerable),
+            nameof(Enumerable.Contains),
+            [field.Type], // Pass the type of the field for generic Contains
+            Expression.Constant(Values),
+            field
+        );
 
-        var body = Expression.Call(containsMethod, constant, field);
-        return Expression.Lambda<Func<T, bool>>(body, parameter);
+        return Expression.Lambda<Func<T, bool>>(containsExpression, parameter);
     }
 }

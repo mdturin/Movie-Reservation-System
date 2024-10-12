@@ -68,10 +68,25 @@ public class BulkRepository(ApplicationDbContext context)
         params Expression<Func<TEntity, object>>[] includes)
             where TEntity : class, IDatabaseModel
     {
-        return GetDbSetAsNoTrackingQueryable<TEntity>()
-            .ApplyIncludes(includes)
-            .Where(conditionExpression)
-            .ToListAsync();
+        try
+        {
+            var query = GetDbSetAsNoTrackingQueryable<TEntity>();
+
+            // Apply includes if any are provided
+            if (includes != null && includes.Length != 0)
+            {
+                query = query.ApplyIncludes(includes);
+            }
+
+            return query
+                .Where(conditionExpression)
+                .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            // Log the exception as needed, depending on your logging strategy
+            throw new Exception("An error occurred while retrieving items from the database.", ex);
+        }
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>()
