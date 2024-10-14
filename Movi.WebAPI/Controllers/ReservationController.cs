@@ -45,12 +45,4 @@ public class ReservationController(
 
         return Ok("Seats reserved successfully");
     }
-
-    [HttpGet("available")]
-    public async Task<IActionResult> AvailableSeats()
-    {
-        var seats = await _context
-            .GetAvailableSeatsAsync();
-        return Ok(_mapper.Map<List<SeatDto>>(seats));
-    }
 }

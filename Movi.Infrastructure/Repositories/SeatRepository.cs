@@ -8,10 +8,13 @@ namespace Movi.Infrastructure.Repositories;
 public class SeatRepository(ApplicationDbContext context)
     : BulkRepository(context), ISeatRepository
 {
-    public Task<List<Seat>> GetAvailableSeatsAsync()
+    public Task<List<Seat>> GetAvailableSeatsByShowTimeIdAsync(string showtimeId)
     {
+        if (string.IsNullOrWhiteSpace(showtimeId))
+            return Task.FromResult(new List<Seat>());
+
         return GetDbSetAsNoTrackingQueryable<Seat>()
-            .Where(s => s.IsAvailable)
+            .Where(s => s.IsAvailable && s.ShowtimeId == showtimeId)
             .ToListAsync();
     }
 
