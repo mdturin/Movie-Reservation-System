@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Abstractions;
 using Movi.Core.Domain.Dtos;
 using Movi.Core.Domain.Entities;
@@ -18,7 +19,9 @@ public class ReservationController(
     public async Task<IActionResult> ReserveSeats([FromBody] ReservationDto request)
     {
         using var session = _context.BeginTransaction();
-        var seats = await _context.GetAvailableSeatsAsync(request.SeatNumbers);
+        var seats = await _context
+            .GetAvailableSeatsAsync(request.ShowtimeId, request.SeatNumbers);
+
         if (seats.Count != request.SeatNumbers.Count)
         {
             return BadRequest("Some seats are not available");
@@ -44,5 +47,35 @@ public class ReservationController(
         await session.CommitAsync();
 
         return Ok("Seats reserved successfully");
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> CancleSeats([FromBody] ReservationDto request)
+    {
+        using var session = _context.BeginTransaction();
+        var seats = await _context.GetAvailableSeatsAsync(request.SeatNumbers);
+        if (seats.Count != request.SeatNumbers.Count)
+        {
+            return BadRequest("Some seats are not found reserved!");
+        }
+
+        var seatIdCondition = new FieldCondition<Reservation>(nameof(Reservation.SeatId), null);
+        var userIdCondition = new FieldCondition<Reservation>(nameof(Reservation.UserId), request.UserId);
+        var condition = new AndCondition<Reservation>(seatIdCondition, userIdCondition);
+
+        seats.ForEach(async seat =>
+        {
+            seatIdCondition.Value = seat.Id;
+            var reservation = await _context
+                .GetItemAsync(condition.ToExpression());
+            if (reservation == null) return;
+            await _context.DeleteAsync<Reservation>(reservation.Id);
+            seat.IsAvailable = true;
+        });
+
+        await _context.UpdateAsync(seats);
+        await session.CommitAsync();
+
+        return Ok("Seats reservation cancled successfully");
     }
 }
