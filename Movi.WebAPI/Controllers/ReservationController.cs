@@ -53,7 +53,8 @@ public class ReservationController(
     public async Task<IActionResult> CancleSeats([FromBody] ReservationDto request)
     {
         using var session = _context.BeginTransaction();
-        var seats = await _context.GetAvailableSeatsAsync(request.SeatNumbers);
+        var seats = await _context
+            .GetAvailableSeatsAsync(request.ShowtimeId, request.SeatNumbers);
         if (seats.Count != request.SeatNumbers.Count)
         {
             return BadRequest("Some seats are not found reserved!");
