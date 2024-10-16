@@ -40,6 +40,7 @@ public class ReservationController(ISeatRepository context) : AControllerBase
 
         await _context.AddAsync(reservations);
         await _context.UpdateAsync(seats);
+        await _context.SaveChangesAsync();
         await session.CommitAsync();
 
         return Ok("Seats reserved successfully");
@@ -60,17 +61,20 @@ public class ReservationController(ISeatRepository context) : AControllerBase
         var userIdCondition = new FieldCondition<Reservation>(nameof(Reservation.UserId), request.UserId);
         var condition = new AndCondition<Reservation>(seatIdCondition, userIdCondition);
 
-        seats.ForEach(async seat =>
+        foreach(var seat in seats)
         {
             seatIdCondition.Value = seat.Id;
+
             var reservation = await _context
                 .GetItemAsync(condition.ToExpression());
-            if (reservation == null) return;
+            if (reservation == null) continue;
+
             await _context.DeleteAsync<Reservation>(reservation.Id);
             seat.IsAvailable = true;
-        });
+        }
 
         await _context.UpdateAsync(seats);
+        await _context.SaveChangesAsync();
         await session.CommitAsync();
 
         return Ok("Seats reservation cancled successfully");
