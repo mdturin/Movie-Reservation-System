@@ -7,8 +7,7 @@ using Movi.Infrastructure.Extensions;
 
 namespace Movi.Infrastructure.Repositories;
 
-public class BulkRepository(ApplicationDbContext context)
-    : IBulkRepository
+public class BulkRepository(ApplicationDbContext context) : IBulkRepository
 {
     private readonly ApplicationDbContext _context = context;
     protected DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class, IDatabaseModel
@@ -21,11 +20,13 @@ public class BulkRepository(ApplicationDbContext context)
     public IDbContextTransaction BeginTransaction()
         => _context.Database.BeginTransaction();
 
-    public async Task<int> AddAsync<TEntity>(TEntity entity)
+    public Task<int> SaveChangesAsync()
+        => _context.SaveChangesAsync();
+
+    public async Task AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel
     {
         await GetDbSet<TEntity>().AddAsync(entity);
-        return await _context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync<TEntity>(string id)
@@ -38,7 +39,6 @@ public class BulkRepository(ApplicationDbContext context)
         if (entity != null)
         {
             GetDbSet<TEntity>().Remove(entity);
-            await _context.SaveChangesAsync();
         }
     }
 
@@ -49,8 +49,6 @@ public class BulkRepository(ApplicationDbContext context)
             .AsNoTracking()
             .Where(entity => ids.Contains(entity.Id))
             .ExecuteDeleteAsync();
-
-        await _context.SaveChangesAsync();
     }
 
     public Task<TEntity> GetItemAsync<TEntity>(
@@ -105,15 +103,15 @@ public class BulkRepository(ApplicationDbContext context)
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
-    public async Task<int> UpdateAsync<TEntity>(TEntity entity)
+    public Task UpdateAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel
     {
         GetDbSet<TEntity>().Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
-        return await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task<int> UpdateAsync<TEntity>(IEnumerable<TEntity> entities)
+    public Task UpdateAsync<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : class, IDatabaseModel
     {
         var dbSet = GetDbSet<TEntity>();
@@ -124,10 +122,10 @@ public class BulkRepository(ApplicationDbContext context)
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        return await _context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task<int> AddAsync<TEntity>(IEnumerable<TEntity> entities)
+    public async Task AddAsync<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : class, IDatabaseModel
     {
         var dbSet = GetDbSet<TEntity>();
@@ -146,7 +144,5 @@ public class BulkRepository(ApplicationDbContext context)
 
             await dbSet.AddAsync(entity);
         }
-
-        return await _context.SaveChangesAsync();
     }
 }

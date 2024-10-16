@@ -7,10 +7,12 @@ public interface IBulkRepository
 {
     IDbContextTransaction BeginTransaction();
 
-    Task<int> AddAsync<TEntity>(TEntity entity)
+    Task<int> SaveChangesAsync();
+
+    Task AddAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel;
 
-    Task<int> AddAsync<TEntity>(IEnumerable<TEntity> entities)
+    Task AddAsync<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : class, IDatabaseModel;
 
     Task DeleteAsync<TEntity>(string id)
@@ -35,9 +37,9 @@ public interface IBulkRepository
     Task<TEntity> GetByIdAsync<TEntity>(string id)
         where TEntity : class, IDatabaseModel;
 
-    Task<int> UpdateAsync<TEntity>(TEntity entity)
+    Task UpdateAsync<TEntity>(TEntity entity)
         where TEntity : class, IDatabaseModel;
 
-    Task<int> UpdateAsync<TEntity>(IEnumerable<TEntity> entities)
+    Task UpdateAsync<TEntity>(IEnumerable<TEntity> entities)
         where TEntity : class, IDatabaseModel;
 }

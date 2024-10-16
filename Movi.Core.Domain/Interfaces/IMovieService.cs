@@ -6,8 +6,8 @@ namespace Movi.Core.Domain.Interfaces;
 
 public interface IMovieService
 {
-    Task<int> AddAsync(MovieDto dto);
-    Task<int> UpdateAsync(MovieDto dto);
+    Task AddAsync(MovieDto dto);
+    Task UpdateAsync(MovieDto dto);
     Task DeleteAsync(string id);
     Task<List<MovieDto>> GetMoviesAsync(Expression<Func<Movie, bool>> exp);
 }

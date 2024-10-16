@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Movi.Core.Application.Conditions;
 using Movi.Core.Domain.Abstractions;
@@ -8,11 +7,8 @@ using Movi.Core.Domain.Interfaces;
 
 namespace Movi.WebAPI.Controllers;
 
-public class ReservationController(
-    IMapper mapper,
-    ISeatRepository context) : AControllerBase
+public class ReservationController(ISeatRepository context) : AControllerBase
 {
-    private readonly IMapper _mapper = mapper;
     private readonly ISeatRepository _context = context;
 
     [HttpPost]
@@ -54,7 +50,7 @@ public class ReservationController(
     {
         using var session = _context.BeginTransaction();
         var seats = await _context
-            .GetAvailableSeatsAsync(request.ShowtimeId, request.SeatNumbers);
+            .GetUnavailableSeatsAsync(request.ShowtimeId, request.SeatNumbers);
         if (seats.Count != request.SeatNumbers.Count)
         {
             return BadRequest("Some seats are not found reserved!");

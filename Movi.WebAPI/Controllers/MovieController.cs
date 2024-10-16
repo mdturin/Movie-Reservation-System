@@ -17,18 +17,16 @@ public class MovieController(IMovieService movieService, ILogger<MovieController
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> AddMovie(MovieDto movie)
     {
-        if (await _movieService.AddAsync(movie) > 0)
-            return Ok("Movie was successfully added.");
-        return BadRequest("Failed to add movie!");
+        await _movieService.AddAsync(movie);
+        return Ok("Movie was successfully added.");
     }
 
     [HttpPut("update")]
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> UpdateMovie(MovieDto movie)
     {
-        if (await _movieService.UpdateAsync(movie) > 0)
-            return Ok("Movie was successfully updated.");
-        return BadRequest("Failed to update movie!");
+        await _movieService.UpdateAsync(movie);
+        return Ok("Movie was successfully updated.");
     }
 
     [HttpDelete("delete")]

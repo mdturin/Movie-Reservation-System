@@ -4,6 +4,25 @@ using Movi.Core.Domain.Interfaces;
 
 namespace Movi.Core.Application.Conditions;
 
+class ReplaceParameterVisitor : ExpressionVisitor
+{
+    private readonly ParameterExpression _oldParameter;
+    private readonly ParameterExpression _newParameter;
+
+    public ReplaceParameterVisitor(
+        ParameterExpression oldParameter,
+        ParameterExpression newParameter)
+    {
+        _oldParameter = oldParameter;
+        _newParameter = newParameter;
+    }
+
+    protected override Expression VisitParameter(ParameterExpression node)
+    {
+        return node == _oldParameter ? _newParameter : base.VisitParameter(node);
+    }
+}
+
 public class AndCondition<T>(params ICondition<T>[] conditions)
     : ACompositeCondition<T>(conditions)
 {
@@ -12,15 +31,17 @@ public class AndCondition<T>(params ICondition<T>[] conditions)
         if (Conditions.Count == 0)
             return (x) => true;
 
-        var combinedExpression = Conditions
-            .Select(c => c.ToExpression())
-            .Aggregate((expr1, expr2) =>
-                Expression.Lambda<Func<T, bool>>(
-                    Expression.AndAlso(expr1.Body, expr2.Body),
-                    expr1.Parameters.Single()
-                ));
+        var parameter = Expression.Parameter(typeof(T), "x");
 
-        return combinedExpression;
+        var combinedExpressionBody = Conditions
+            .Select(c => c.ToExpression())
+            .Select(expr => {
+                var visitor = new ReplaceParameterVisitor(expr.Parameters[0], parameter);
+                return visitor.Visit(expr.Body);
+            })
+            .Aggregate(Expression.AndAlso);
+
+        return Expression.Lambda<Func<T, bool>>(combinedExpressionBody, parameter);
     }
 }
 
